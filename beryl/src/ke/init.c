@@ -4,7 +4,7 @@
 NO_RETURN void
 KiSystemStartup(void)
 {
-    printf("Hello, World!\n");
+    printf("Hello, %s\n", "World!");
 
     while (true)
     {
