@@ -1,0 +1,7 @@
+[submodule "limine"]
+	path = limine
+	url = https://github.com/limine-bootloader/limine.git
+	branch = v8.x-binary
+[submodule "beryl/src/vendor/printf"]
+	path = beryl/src/vendor/printf
+	url = https://github.com/mpaland/printf.git

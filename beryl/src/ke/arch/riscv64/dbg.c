@@ -1,0 +1,21 @@
+#include <beryl.h>
+
+#define UART0_BASE 0x10000000
+
+void
+DbgPrintChar(In char c)
+{
+    *(volatile uint8_t *)UART0_BASE = c;
+}
+
+void
+DbgPrintString(In const char *string)
+{
+    while (*string)
+    {
+        DbgPrintChar(*string++);
+    }
+}
+
+void
+_putchar(char c) ALIAS("DbgPrintChar");
