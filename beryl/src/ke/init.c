@@ -1,4 +1,5 @@
 #include <beryl.h>
+#include <ke.h>
 #include <printf/printf.h>
 
 NO_RETURN void
