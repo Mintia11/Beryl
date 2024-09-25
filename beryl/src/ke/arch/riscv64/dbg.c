@@ -1,6 +1,6 @@
 #include <beryl.h>
 
-#define UART0_BASE 0x10000000
+#define UART0_BASE 0xffff800010000000
 
 void
 DbgPrintChar(In char c)
