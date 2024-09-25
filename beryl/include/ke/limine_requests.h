@@ -11,4 +11,6 @@ USED SECTION(".requests_end_marker") static volatile LIMINE_REQUESTS_END_MARKER;
 
 LIMINE_REQUEST LIMINE_BASE_REVISION(2);
 
+#undef LIMINE_REQUEST
+
 #endif
