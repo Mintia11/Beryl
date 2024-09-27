@@ -73,5 +73,4 @@ endif
 .PHONY: clean
 clean:
 	@rm -rf $(BUILD_DIR) $(ISO_DIR) $(IMAGE_TARGET)
-	@$(MAKE) -C limine clean
 	@$(MAKE) -C beryl clean

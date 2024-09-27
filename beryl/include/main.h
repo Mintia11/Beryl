@@ -2,7 +2,7 @@
 #define BERYL_MAIN_H
 
 #define NO_RETURN __attribute__((noreturn))
-#define ALIAS(a) __attribute__((alias(a)))
+#define ALIAS(a) __attribute__((alias(#a)))
 #define USED __attribute__((used))
 #define SECTION(s) __attribute__((section(s)))
 #define ALWAYS_INLINE __attribute__((always_inline))

@@ -18,4 +18,4 @@ DbgPrintString(In const char *string)
 }
 
 void
-_putchar(char c) ALIAS("DbgPrintChar");
+_putchar(char c) ALIAS(DbgPrintChar);

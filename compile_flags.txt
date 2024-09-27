@@ -12,3 +12,5 @@
 -I.                      
 -Iberyl/include
 -Iberyl/src/vendor
+-D TARGET=riscv64
+-DNDEBUG

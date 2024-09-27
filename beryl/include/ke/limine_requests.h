@@ -4,13 +4,13 @@
 #include <beryl.h>
 #include <limine.h>
 
-#define LIMINE_REQUEST USED SECTION(".requests") static volatile
+typedef enum
+{
+    LIMINE_BASE_REVISION,
+    LIMINE_PAGING_MODE,
+} KiLimineRequest;
 
-USED SECTION(".requests_start_marker") static volatile LIMINE_REQUESTS_START_MARKER;
-USED SECTION(".requests_end_marker") static volatile LIMINE_REQUESTS_END_MARKER;
-
-LIMINE_REQUEST LIMINE_BASE_REVISION(2);
-
-#undef LIMINE_REQUEST
+ALWAYS_INLINE void *
+KiGetLimineRequest(In KiLimineRequest req);
 
 #endif
