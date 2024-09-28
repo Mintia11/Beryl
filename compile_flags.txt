@@ -1,4 +1,4 @@
---target=riscv64-unknown-none
+--target=x86_64-unknown-none
 -fno-omit-frame-pointer      
 -std=c11                     
 -ffreestanding               
@@ -12,5 +12,5 @@
 -I.                      
 -Iberyl/include
 -Iberyl/src/vendor
--D TARGET=riscv64
+-D TARGET=x86_64
 -DNDEBUG

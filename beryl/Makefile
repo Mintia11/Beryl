@@ -16,27 +16,28 @@ else
 endif
 
 override CFLAGS +=               \
-	-target riscv64-unknown-none \
 	-fno-omit-frame-pointer      \
-	-std=c11                     \
+	-std=gnu23                   \
 	-ffreestanding               \
 	-fno-stack-protector         \
 	-fno-stack-check             \
 	-fno-lto                     \
-	-fno-pie                     \
 	-fno-pic                     \
 	-MMD                         \
 	-MP                          \
 	-I.                          \
-	-ffunction-sections          
+	-ffunction-sections          \
+	-fdata-sections              
 
 override LDFLAGS +=         \
 	-nostdlib               \
 	-T linker-$(TARGET).ld  \
-	-gc-sections               
+	-gc-sections            \
+	-static
 
 ifeq ($(TARGET),riscv64)
 override CFLAGS +=   \
+	-target riscv64-unknown-none \
 	-march=rv64imac  \
 	-mabi=lp64       \
 	-mno-relax
@@ -44,6 +45,22 @@ override CFLAGS +=   \
 override LDFLAGS +=  \
 	-m elf64lriscv   \
 	--no-relax
+endif
+
+ifeq ($(TARGET),x86_64)
+override CFLAGS +=			    \
+	-target x86_64-unknown-none \
+	-m64 						\
+    -march=x86-64 				\
+    -mno-80387 					\
+    -mno-mmx 					\
+    -mno-sse 					\
+    -mno-sse2 					\
+    -mno-red-zone 				\
+    -mcmodel=kernel
+
+override LDFLAGS +=  \
+	-m elf_x86_64
 endif
 
 override CFILES := $(shell find $(SRC_DIR) -not -path '*/.*' -not -path '*/arch/*' -type f -name '*.c')
