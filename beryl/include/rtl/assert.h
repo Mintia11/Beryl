@@ -19,7 +19,7 @@ RtlAssert(In const char *expr, In const char *file, In int line, In const char *
     do                                                                                                                 \
     {                                                                                                                  \
         if (!(expr))                                                                                                   \
-            RtlAssert(#expr, __FILE__, __LINE__, format, __VA_ARGS__);                                                 \
+            RtlAssert(#expr, __FILE__, __LINE__, format __VA_OPT__(, ) __VA_ARGS__);                                   \
     } while (0)
 
 #else
