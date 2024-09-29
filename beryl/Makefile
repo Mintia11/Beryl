@@ -61,15 +61,27 @@ override CFLAGS +=			    \
 
 override LDFLAGS +=  \
 	-m elf_x86_64
+
+override ASMFLAGS += \
+	-F dwarf -g -f elf64
 endif
 
 override CFILES := $(shell find $(SRC_DIR) -not -path '*/.*' -not -path '*/arch/*' -type f -name '*.c')
 override SFILES := $(shell find $(SRC_DIR) -not -path '*/.*' -not -path '*/arch/*' -type f -name '*.S')
 
 override CFILES += $(shell find $(SRC_DIR) -path '*/arch/$(TARGET)/*' -type f -name '*.c')
-override SFILES += $(shell find $(SRC_DIR) -path '*/arch/$(TARGET)/*' -type f -name '*.S')
+override ASFILES += $(shell find $(SRC_DIR) -path '*/arch/$(TARGET)/*' -type f -name '*.S')
 
-override OBJ := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(CFILES:.c=.o) $(ASFILES:.S=.o))
+ifeq ($(TARGET),x86_64)
+override ASMFILES := $(shell find $(SRC_DIR) -path '*/arch/$(TARGET)/*' -type f -name '*.asm')
+endif
+
+override OBJ := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(CFILES:.c=.c.o) $(ASFILES:.S=.S.o))
+
+ifeq ($(TARGET),x86_64)
+override OBJ += $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(ASMFILES:.asm=.asm.o))
+endif
+
 override HEADER_DEPS := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(CFILES:.c=.d) $(ASFILES:.S=.d))
 
 .PHONY: all
@@ -83,12 +95,19 @@ $(KERNEL_ELF): $(OBJ)
 
 -include $(HEADER_DEPS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+$(BUILD_DIR)/%.c.o: $(SRC_DIR)/%.c
 	@printf "[CC]\t$<\n"
 	@mkdir -p $(dir $@)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
+$(BUILD_DIR)/%.S.o: $(SRC_DIR)/%.S
 	@printf "[AS]\t$<\n"
 	@mkdir -p $(dir $@)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+ifeq ($(TARGET),x86_64)
+$(BUILD_DIR)/%.asm.o: $(SRC_DIR)/%.asm
+	@printf "[NASM]\t$<\n"
+	@mkdir -p $(dir $@)
+	@nasm $(ASMFLAGS) $< -o $@
+endif
