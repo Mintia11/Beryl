@@ -1,3 +1,4 @@
+#include "rtl/memory.h"
 #include <beryl.h>
 
 void *
@@ -67,3 +68,6 @@ memcmp(In const void *s1, In const void *s2, In size_t n)
 
     return 0;
 }
+
+void
+RtlCopyString(void *destination, const void *source, size_t len) ALIAS(memcpy);

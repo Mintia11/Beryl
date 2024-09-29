@@ -1,13 +1,14 @@
 #ifndef BERYL_KE_LIMINE_REQUESTS_H
 #define BERYL_KE_LIMINE_REQUESTS_H
 
-#include <beryl.h>
 #include <limine.h>
+#include <main.h>
 
 typedef enum
 {
-    LIMINE_BASE_REVISION,
-    LIMINE_PAGING_MODE,
+    KI_LIMINE_BASE_REVISION,
+    KI_LIMINE_PAGING_MODE,
+    KI_LIMINE_STACK_SIZE,
 } KiLimineRequest;
 
 ALWAYS_INLINE void *

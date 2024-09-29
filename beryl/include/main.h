@@ -1,6 +1,11 @@
 #ifndef BERYL_MAIN_H
 #define BERYL_MAIN_H
 
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
 #define NO_RETURN __attribute__((noreturn))
 #define ALIAS(a) __attribute__((alias(#a)))
 #define USED __attribute__((used))
