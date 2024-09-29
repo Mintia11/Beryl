@@ -1,5 +1,5 @@
-#ifndef BERYL_KE_ARCH_H
-#define BERYL_KE_ARCH_H
+#ifndef BERYL_KE_DBG_H
+#define BERYL_KE_DBG_H
 
 #include <main.h>
 
@@ -8,8 +8,5 @@ DbgPrintChar(In char c);
 
 void
 DbgPrintString(In const char *string);
-
-ALWAYS_INLINE void
-KeWaitForNextInterrupt();
 
 #endif
