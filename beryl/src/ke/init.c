@@ -1,8 +1,9 @@
 #include <beryl.h>
 #include <ke.h>
 #include <printf/printf.h>
+#include <ps.h>
 
-KeProcess KiIdleProcess;
+PsProcess KiIdleProcess;
 
 NO_RETURN void
 KiIdleThread(void *context1, void *context2);
@@ -10,8 +11,8 @@ KiIdleThread(void *context1, void *context2);
 NO_RETURN void
 KiSystemStartupInternal(uintptr_t idle_thread_stack)
 {
-    printf("Hello, %s\n", "World!");
-    printf("Idle thread stack top: 0x%p\n", idle_thread_stack);
+    DbgPrintf("Hello, %s\n", "World!");
+    DbgPrintf("Idle thread stack top: 0x%p\n", idle_thread_stack);
 
     uint64_t *base_request =
         (uint64_t *)KiGetLimineRequest(KI_LIMINE_BASE_REVISION);
@@ -20,12 +21,14 @@ KiSystemStartupInternal(uintptr_t idle_thread_stack)
         "Boootloader revision 2 is not supported (expected 0 found %d)",
         base_request[2]);
 
-    KeInitializeProcess(&KiIdleProcess, "Idle Process");
+    KeProcess *pcb = &KiIdleProcess.pcb;
+
+    KeInitializeProcess(pcb, "Idle Process");
 
     KeThread idle_thread;
     KeInitializeThread(
-        &KiIdleProcess, &idle_thread, "Idle Thread",
-        (void *)idle_thread_stack - 0x10000, 0xF000, KiIdleThread, NULL, NULL);
+        pcb, &idle_thread, "Idle Thread", (void *)idle_thread_stack - 0x10000,
+        0xF000, KiIdleThread, NULL, NULL);
 
     KiJumpIntoThread(idle_thread.Context);
 }
@@ -33,7 +36,10 @@ KiSystemStartupInternal(uintptr_t idle_thread_stack)
 NO_RETURN void
 KiIdleThread(void *context1, void *context2)
 {
-    printf("Hello from the idle thread!\n");
+    (void)context1;
+    (void)context2;
+
+    DbgPrintf("Hello from the idle thread!\n");
 
     while (true)
     {
