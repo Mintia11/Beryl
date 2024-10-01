@@ -91,6 +91,18 @@ ifeq ($(TARGET),x86_64)
 		-debugcon stdio
 endif
 
+run-kvm: image ovmf/ovmf-code-$(TARGET).fd ovmf/ovmf-vars-$(TARGET).fd
+	@echo "Running in QEMU..."
+ifeq ($(TARGET),x86_64)
+	@qemu-system-$(TARGET) \
+		-M q35 \
+		-drive if=pflash,unit=0,format=raw,file=ovmf/ovmf-code-$(TARGET).fd,readonly=on \
+		-drive if=pflash,unit=1,format=raw,file=ovmf/ovmf-vars-$(TARGET).fd \
+		-cdrom $(IMAGE_TARGET) \
+		-debugcon stdio \
+		-enable-kvm -cpu host,migratable=off
+endif
+
 .PHONY: clean
 clean:
 	@rm -rf $(BUILD_DIR) $(ISO_DIR) $(IMAGE_TARGET)
