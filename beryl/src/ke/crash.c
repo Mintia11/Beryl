@@ -5,12 +5,16 @@
 NO_RETURN void
 KeCrash(const char *message, ...)
 {
+    char buffer[1024];
     va_list args;
 
-    printf("Kernel crash: \n");
+    DbgPrintString("Kernel crash: \n");
 
     va_start(args, message);
-    vprintf(message, args);
+
+    vsnprintf(buffer, sizeof(buffer), message, args);
+    DbgPrintString(buffer);
+
     va_end(args);
 
     for (;;)

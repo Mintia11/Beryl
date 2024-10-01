@@ -9,4 +9,7 @@ DbgPrintChar(In char c);
 void
 DbgPrintString(In const char *string);
 
+void
+DbgPrintf(In const char *fmt, ...);
+
 #endif

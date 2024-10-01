@@ -1,5 +1,6 @@
 #include <beryl.h>
 #include <ke.h>
+#include <printf/printf.h>
 
 void
 DbgPrintChar(In char c)
@@ -17,4 +18,16 @@ DbgPrintString(In const char *string)
 }
 
 void
-_putchar(char c) ALIAS(DbgPrintChar);
+DbgPrintf(In const char *fmt, ...)
+{
+    char buffer[1024];
+
+    va_list args;
+    va_start(args, fmt);
+
+    vsnprintf(buffer, sizeof(buffer), fmt, args);
+
+    va_end(args);
+
+    DbgPrintString(buffer);
+}
