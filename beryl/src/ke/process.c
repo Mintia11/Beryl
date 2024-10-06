@@ -7,4 +7,5 @@ KeInitializeProcess(KeProcess *process, const char *name)
 {
     RtlCopyString(process->Name, name, sizeof(process->Name));
     RtlInizializeListHead(&process->ThreadListHead);
+    KeInitializeSpinlock(&process->ThreadListLock);
 }

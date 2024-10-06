@@ -13,6 +13,8 @@ KeInitializeThread(
     void *context1,
     void *context2)
 {
+    KiIpl oldIPL;
+
     RtlCopyString(thread->Name, name, sizeof(thread->Name));
 
     thread->Process = process;
@@ -22,5 +24,7 @@ KeInitializeThread(
         context2);
     thread->KernelStackTop = kernel_stack + kernel_stack_size;
 
+    KeAcquireSpinlock(&process->ThreadListLock, &oldIPL);
     RtlInsertTailList(&process->ThreadListHead, &thread->ProcessListEntry);
+    KeReleaseSpinlock(&process->ThreadListLock, oldIPL);
 }

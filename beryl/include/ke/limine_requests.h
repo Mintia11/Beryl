@@ -10,6 +10,7 @@ typedef enum
     KI_LIMINE_PAGING_MODE,
     KI_LIMINE_STACK_SIZE,
     KI_LIMINE_MEMMAP,
+    KI_LIMINE_SMP,
 } KiLimineRequest;
 
 ALWAYS_INLINE void *

@@ -6,4 +6,9 @@
 ALWAYS_INLINE void
 KeWaitForNextInterrupt();
 
+bool
+KeDisableInterrupts();
+void
+KeEnableInterrupts();
+
 #endif

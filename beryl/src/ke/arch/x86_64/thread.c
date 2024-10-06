@@ -9,7 +9,7 @@ KiInitializeContext(
     void *context1,
     void *context2)
 {
-    KeThreadContext *context = (KeThreadContext *)stack - 1;
+    OSContext *context = (OSContext *)stack - 1;
 
     context->rip = (uint64_t)KiThreadTrampoline;
     context->rbx = (uint64_t)start_routine;

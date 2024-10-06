@@ -2,6 +2,7 @@
 #define BERYL_MAIN_H
 
 #include <stdarg.h>
+#include <stdatomic.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
