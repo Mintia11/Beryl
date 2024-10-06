@@ -18,7 +18,7 @@ MiAllocateFromEarlyHeap(size_t pages)
 
         if (entry->type != LIMINE_MEMMAP_USABLE)
             continue;
-        if (entry->length < pages * 0x10000)
+        if (entry->length < pages * 0x1000)
             continue;
 
         entry->length -= pages * 0x10000;
@@ -26,6 +26,8 @@ MiAllocateFromEarlyHeap(size_t pages)
         void *ret = (void *)entry->base;
         entry->base += pages * 0x10000;
 
-        return ret;
+        return ret + MI_HHDM_ADDR;
     }
+
+    assert2(false, "How did we run out of memory?");
 }
