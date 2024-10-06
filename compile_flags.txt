@@ -14,3 +14,5 @@
 -Iberyl/src/vendor
 -D TARGET=x86_64
 -DNDEBUG
+-Wall
+-Wextra
