@@ -10,9 +10,9 @@ CPPFLAGS ?= -I $(INC_DIR) -I src/$(VENDOR_DIR) -DPRINTF_DISABLE_SUPPORT_FLOAT -D
 LDFLAGS ?=
 
 ifeq ($(NDEBUG),yes)
-	CFLAGS += -O2
-else
 	CFLAGS += -O0 -g
+else
+	CFLAGS += -O2
 endif
 
 override CFLAGS +=               \
